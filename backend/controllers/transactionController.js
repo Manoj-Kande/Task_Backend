@@ -50,14 +50,14 @@ const getTransactions= async (req,res)=>{
 const deleteTransaction = async (req,res)=>{
     try {
         
-        const id=req.params.id;
-        
-        const transaction=await transactionModel.findByIdAndDelete(id)
+        const id=Number(req.params.id);
+        const transaction = await transactionModel.findOneAndDelete({ id: id })
         .then(()=>{
             console.log("Deleted Data Successfully");
         })
         .catch((err)=>{
             console.log("Error while deleting the date");
+            console.log(err);
         });
         res.json({success:true,message:"Food Removed"});
     } catch (err) {
